@@ -57,19 +57,13 @@ git clone https://github.com/LeandroMF20/Simple-OS.git
 cd Simple-OS
 ```
 
-### 2. Run the installer
+### 2. Run de Installer
 
 ```bash
+chmod +x install.sh
 ./install.sh
 ```
 
-The installer will automatically:
-- Copy the `.env` files from the examples
-- Build and start the Docker containers (PHP + MySQL)
-- Wait for the database to be ready
-- Install Composer and npm dependencies
-- Generate the application key
-- Run the database migrations
 
 Once finished, the application will be available at **http://localhost:8080** and MySQL database will be available at **localhost:3306**.
 

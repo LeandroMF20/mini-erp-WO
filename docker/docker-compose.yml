@@ -4,7 +4,11 @@ services:
     build:
       context: ./php
       dockerfile: Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
     container_name: app_php
+    user: "${UID}:${GID}"
     restart: unless-stopped
     ports:
       - "8080:80"

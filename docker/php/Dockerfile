@@ -1,5 +1,8 @@
 FROM php:8.3-apache
 
+ARG UID=1000
+ARG GID=1000
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -52,6 +55,17 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Enable Apache mod_rewrite (required by Laravel)
 RUN a2enmod rewrite
+
+# Create an application user/group to avoid permission issues on bind-mounted files.
+RUN set -eux; \
+    groupadd -g "${GID}" app; \
+    useradd -m -u "${UID}" -g app -s /bin/bash app
+
+# Configure Apache workers to run as the application user.
+ENV APACHE_RUN_USER=app
+ENV APACHE_RUN_GROUP=app
+RUN sed -ri 's/^export APACHE_RUN_USER=.*/export APACHE_RUN_USER=${APACHE_RUN_USER}/' /etc/apache2/envvars \
+    && sed -ri 's/^export APACHE_RUN_GROUP=.*/export APACHE_RUN_GROUP=${APACHE_RUN_GROUP}/' /etc/apache2/envvars
 
 # Set the DocumentRoot to /var/www/html/public (Laravel default)
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public

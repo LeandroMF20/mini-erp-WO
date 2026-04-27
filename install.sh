@@ -27,13 +27,4 @@ docker compose -f docker/docker-compose.yml exec -T app bash -c 'until php artis
 echo "Running migrations..."
 docker compose -f docker/docker-compose.yml exec -T app php artisan migrate
 
-echo "Setting permissions on bootstrap/cache and storage..."
-docker compose -f docker/docker-compose.yml exec -T app chown -R www-data:www-data storage bootstrap/cache
-docker compose -f docker/docker-compose.yml exec -T app find storage bootstrap/cache -type d -exec chmod 775 {} +
-docker compose -f docker/docker-compose.yml exec -T app find storage bootstrap/cache -type f -exec chmod 664 {} +
-
-echo "Clearing configuration and cache..."
-docker compose -f docker/docker-compose.yml exec -T app php artisan config:clear
-docker compose -f docker/docker-compose.yml exec -T app php artisan cache:clear
-
 echo "Installation completed!"
