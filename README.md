@@ -65,7 +65,7 @@ More complex or commercial-specific features (advanced billing, multiple integra
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/LeandroMF20/Simple-OS.git
+git clone https://github.com/LeandroMF20/mini-erp-WO.git
 cd Simple-OS
 ```
 
